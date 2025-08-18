@@ -1,0 +1,72 @@
+[
+  {
+    "id": "dry-high",
+    "name": "キュレル 潤浸保湿フェイスクリーム 40g",
+    "reason": "乾燥度が高い方向け（高保湿）",
+    "rule": "dryness>=65",
+    "url": "https://www.amazon.co.jp/dp/B001JF0MRG"
+  },
+  {
+    "id": "oil-toner",
+    "name": "オードムーゲ 薬用ローション 500ml（ふきとり化粧水）",
+    "reason": "皮脂・ニキビ予防の拭き取り化粧水",
+    "rule": "oiliness>=60",
+    "url": "https://www.amazon.co.jp/dp/B0CCNR5K4L"
+  },
+  {
+    "id": "red-gentle",
+    "name": "ミノン アミノモイスト ジェントルウォッシュ ホイップ",
+    "reason": "赤み・敏感肌にやさしい低刺激洗顔",
+    "rule": "redness>=60",
+    "url": "https://www.amazon.co.jp/dp/B00SAS14UO"
+  },
+  {
+    "id": "bright-serum",
+    "name": "メラノCC 薬用しみ集中対策プレミアム美容液",
+    "reason": "くすみが気になる方向け（高濃度ビタミンC）",
+    "rule": "brightness<=45",
+    "url": "https://www.amazon.co.jp/dp/B0BCVS9ZV5"
+  },
+  {
+    "id": "puffy-cool",
+    "name": "ANUA レチノール0.1% カフェイン アイクリーム 30g",
+    "reason": "目元のむくみ・クマ対策",
+    "rule": "puffiness>=60",
+    "url": "https://www.amazon.co.jp/dp/B0CZ3FCCR2"
+  },
+  {
+    "id": "balance-1",
+    "name": "キュレル 皮脂トラブルケア 化粧水",
+    "reason": "乾燥と皮脂のバランスケア",
+    "rule": "dryness>=40 && oiliness>=40",
+    "url": "https://www.amazon.co.jp/dp/B007MWYUXM"
+  },
+  {
+    "id": "calm-1",
+    "name": "ラロッシュポゼ シカプラスト バームB5",
+    "reason": "赤み＋乾燥をやさしく保護・鎮静",
+    "rule": "redness>=55 && dryness>=50",
+    "url": "https://www.amazon.co.jp/dp/B0CSS3MC3J"
+  },
+  {
+    "id": "glow-1",
+    "name": "メラノCC 薬用しみ対策 美白化粧水（しっとり）",
+    "reason": "トーンアップ・くすみ対策の拭き取り/保湿",
+    "rule": "brightness<=50",
+    "url": "https://www.amazon.co.jp/dp/B08WMJ1WF1"
+  },
+  {
+    "id": "oil-gel",
+    "name": "キュレル 皮脂トラブルケア 保湿ジェル 120ml",
+    "reason": "べたつきにくいジェル保湿（オイリー肌向け）",
+    "rule": "oiliness>=50 && dryness<=40",
+    "url": "https://www.amazon.co.jp/dp/B083WBRFJF"
+  },
+  {
+    "id": "mild-wash",
+    "name": "ラロッシュポゼ トレリアン ダーモクレンザー",
+    "reason": "ゆらぎ肌向けの低刺激クレンジング/洗顔",
+    "rule": "redness>=45",
+    "url": "https://www.amazon.co.jp/dp/B000IOBEG2"
+  }
+]
