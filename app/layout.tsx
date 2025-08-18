@@ -9,10 +9,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja">
-      {/* Tailwindを使わない想定のため、独自CSSクラスに変更 */}
-      <body className="app-body">
-        {children}
-      </body>
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#7c3aed" />
+      </head>
+      <body className="app-body">{children}</body>
     </html>
   )
 }

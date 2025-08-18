@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts'
 
 export type Scores = {
@@ -14,24 +14,30 @@ export type Scores = {
 type Product = { id:string; name:string; reason:string; url:string }
 
 export default function Page(){
+  // ★ SW登録はコンポーネント内の useEffect で
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js')
+        .then(() => console.log('Service Worker registered'))
+        .catch(err => console.error('SW registration failed', err))
+    }
+  }, [])
+
   const [file, setFile] = useState<File|null>(null)
   const [loading, setLoading] = useState(false)
   const [scores, setScores] = useState<Scores|null>(null)
   const [products, setProducts] = useState<Product[]>([])
   const [error, setError] = useState<string>('')
 
-  const chartData = useMemo(()=>{
-    if(!scores) return []
-    return [
-      { metric: '乾燥', value: scores.dryness },
-      { metric: '皮脂', value: scores.oiliness },
-      { metric: '赤み', value: scores.redness },
-      { metric: '明るさ', value: scores.brightness },
-      { metric: 'むくみ', value: scores.puffiness }
-    ]
-  },[scores])
+  const chartData = useMemo(()=> !scores ? [] : [
+    { metric: '乾燥', value: scores.dryness },
+    { metric: '皮脂', value: scores.oiliness },
+    { metric: '赤み', value: scores.redness },
+    { metric: '明るさ', value: scores.brightness },
+    { metric: 'むくみ', value: scores.puffiness }
+  ],[scores])
 
-  const onAnalyze = async()=>{
+  const onAnalyze = async()=> {
     setError('')
     if(!file){ setError('画像を選択してください'); return }
     setLoading(true)
@@ -54,6 +60,7 @@ export default function Page(){
         puffiness: String(json.scores.puffiness)
       })
       const rec = await fetch(`/api/recommend?${qs.toString()}`)
+      if(!rec.ok){ throw new Error('レコメンド取得に失敗しました') }
       const recJson = await rec.json()
       setProducts(recJson.products || [])
     }catch(e:any){
