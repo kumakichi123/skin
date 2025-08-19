@@ -3,6 +3,10 @@
 import { useMemo, useState, useEffect } from 'react'
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts'
 
+declare global {
+  interface Window { gtag?: (...args: any[]) => void }
+}
+
 export type Scores = {
   dryness: number
   oiliness: number
@@ -14,7 +18,7 @@ export type Scores = {
 type Product = { id:string; name:string; reason:string; url:string }
 
 export default function Page(){
-  // ★ SW登録はコンポーネント内の useEffect で
+  // SW登録
   useEffect(() => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js')
@@ -22,6 +26,22 @@ export default function Page(){
         .catch(err => console.error('SW registration failed', err))
     }
   }, [])
+
+  // 「インストール」プロンプト（Android向け）
+  const [deferred, setDeferred] = useState<any>(null)
+  useEffect(()=>{
+    const onBeforeInstall = (e: any) => {
+      e.preventDefault()
+      setDeferred(e)
+    }
+    window.addEventListener('beforeinstallprompt', onBeforeInstall)
+    return () => window.removeEventListener('beforeinstallprompt', onBeforeInstall)
+  },[])
+
+  // GA4 helper
+  const ga = (name: string, params?: Record<string, any>) => {
+    try { window.gtag?.('event', name, params) } catch {}
+  }
 
   const [file, setFile] = useState<File|null>(null)
   const [loading, setLoading] = useState(false)
@@ -41,6 +61,8 @@ export default function Page(){
     setError('')
     if(!file){ setError('画像を選択してください'); return }
     setLoading(true)
+    ga('analyze_start')
+
     try{
       const b64 = await fileToBase64(file)
       const res = await fetch('/api/analyze',{
@@ -51,6 +73,7 @@ export default function Page(){
       const json = await res.json()
       if(!res.ok){ throw new Error(json?.error || '解析に失敗しました') }
       setScores(json.scores)
+      ga('analyze_success', { latency_ms: performance.now() }) // 簡易で計測
 
       const qs = new URLSearchParams({
         dryness: String(json.scores.dryness),
@@ -63,8 +86,10 @@ export default function Page(){
       if(!rec.ok){ throw new Error('レコメンド取得に失敗しました') }
       const recJson = await rec.json()
       setProducts(recJson.products || [])
+      ga('recommend_list_loaded', { count: (recJson.products||[]).length })
     }catch(e:any){
       setError(e.message || '解析でエラーが発生しました')
+      ga('analyze_error', { message: String(e?.message||e) })
     }finally{
       setLoading(false)
     }
@@ -77,6 +102,17 @@ export default function Page(){
           <h1 style={{fontSize:28,fontWeight:800}}>スキンケアAI（MVP）</h1>
           <p className="small">美容用途の簡易肌診断。医療診断ではありません。画像は保存せず、解析後に破棄します。</p>
         </header>
+
+        {/* Android用インストールボタン（出せる環境のみ表示） */}
+        {deferred && (
+          <div className="card" style={{padding:12}}>
+            <button className="button" onClick={async()=>{
+              ga('pwa_install_prompt')
+              await deferred.prompt()
+              setDeferred(null)
+            }}>ホームに追加（インストール）</button>
+          </div>
+        )}
 
         <section className="card" style={{padding:16}}>
           <div className="grid-2" style={{gap:16}}>
@@ -117,7 +153,13 @@ export default function Page(){
                     <div style={{fontWeight:700}}>{p.name}</div>
                     <div className="small" style={{marginTop:4}}>{p.reason}</div>
                   </div>
-                  <a className="link" href={p.url} target="_blank" rel="noreferrer">詳細を見る →</a>
+                  <a
+                    className="link"
+                    href={p.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={()=>ga('recommend_click', { id: p.id })}
+                  >詳細を見る →</a>
                 </div>
               </article>
             ))}
