@@ -98,9 +98,10 @@ export default function Page(){
   return (
     <main>
       <div className="container grid" style={{gap:24}}>
-        <header className="grid">
-          <h1 style={{fontSize:28,fontWeight:800}}>スキンケアAI（MVP）</h1>
-          <p className="small">美容用途の簡易肌診断。医療診断ではありません。画像は保存せず、解析後に破棄します。</p>
+        <header className="grid" style={{textAlign:'center', gap:8}}>
+          <h1 style={{fontSize:32,fontWeight:800,letterSpacing:'-0.02em'}}>スキンケアAI</h1>
+          <p className="small">AIが肌を5つの指標でスコア化し、あなたに合ったコスメを提案します</p>
+          <p className="small" style={{opacity:.7}}>※ 医療診断ではありません</p>
         </header>
 
         {/* Android用インストールボタン（出せる環境のみ表示） */}

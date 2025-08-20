@@ -1,10 +1,12 @@
+// app/layout.tsx
 import './globals.css'
 import type { Metadata } from 'next'
 import Script from 'next/script'
 
 export const metadata: Metadata = {
   title: 'スキンケアAI - 簡易肌診断',
-  description: '自宅でできるAI肌診断（美容用途）。写真から5指標をスコア化し、商品をおすすめします。'
+  description:
+    '自宅でできるAI肌診断（美容用途）。写真から乾燥・皮脂・赤み・明るさ・むくみをスコア化し、あなたに合った商品をおすすめします。',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -25,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             window.dataLayer = window.dataLayer || [];
             function gtag(){ dataLayer.push(arguments); }
             gtag('js', new Date());
-            gtag('config', 'G-GLYT9K56MZ');
+            gtag('config', 'G-GLYT9K56MZ', { send_page_view: true });
           `}
         </Script>
       </head>
