@@ -1,60 +1,61 @@
 // lib/rules.ts
-export type RuleScores = { dryness:number; oiliness:number; redness:number; brightness:number; puffiness:number }
+import type { Scores } from '../app/page'
 
-const CMP = ['>=','<=','>','<','=='] as const
+type Op = '>='|'<='|'>'|'<'|'='|'=='
+type Cond = { key: keyof Scores, op: Op, value: number }
+export type Rule = string | Cond[]   // "dryness>=65 & brightness<=45" でも、配列でもOK
 
-function evalAtom(expr:string, s:RuleScores){
-  expr = expr.trim()
-  const op = CMP.find(o => expr.includes(o))
-  if(!op) return false
-  const [key, raw] = expr.split(op).map(t=>t.trim())
-  const val = Number(raw)
-  if(!Number.isFinite(val)) return false
-  const v = (s as any)[key]
-  if(typeof v !== 'number') return false
-  switch(op){
-    case '>=': return v >= val
-    case '<=': return v <= val
-    case '>': return v > val
-    case '<': return v < val
-    case '==': return v === val
-    default: return false
-  }
-}
+export function evalRule(rule: Rule, s: Scores){
+  const groups = typeof rule==='string' ? parseRule(rule) : (rule as Cond[])
 
-export function evaluateRule(rule:string, s:RuleScores):boolean{
-  const orParts = rule.split('||')
-  return orParts.some(orExpr => orExpr.trim().split('&&').every(andExpr => evalAtom(andExpr, s)))
-}
+  // ORグループに対応（"A|B"）: 1つでも全ANDが満たされれば一致
+  const orGroups: Cond[][] = Array.isArray(groups[0]) ? (groups as any) : [groups as Cond[]]
 
-/** 0〜1で「どれだけ条件に近いか」を返す（ORはmax/ANDは平均） */
-export function scoreRuleFit(rule:string, s:RuleScores):number{
-  if(!rule) return 0
-  const orParts = rule.split('||').map(p=>p.trim()).filter(Boolean)
-  const atomScore = (expr:string)=>{
-    const op = CMP.find(o => expr.includes(o))
-    if(!op) return 0
-    const [key, raw] = expr.split(op).map(t=>t.trim())
-    const t = Number(raw)
-    const v = (s as any)[key]
-    if(typeof v !== 'number' || !Number.isFinite(t)) return 0
-    // 0〜100スケールを想定した素朴な正規化スコア（満たせば1、外れるほど減点）
-    const clamp01 = (x:number)=> Math.max(0, Math.min(1, x))
-    switch(op){
-      case '>=': return clamp01(1 - Math.max(0, (t - v))/100)
-      case '<=': return clamp01(1 - Math.max(0, (v - t))/100)
-      case '>':  return clamp01(1 - Math.max(0, (t + 1 - v))/100)
-      case '<':  return clamp01(1 - Math.max(0, (v - (t - 1)))/100)
-      case '==': return clamp01(1 - Math.abs(v - t)/100)
-      default: return 0
+  let matched = false
+  let matchCount = 0
+  let strength = 0
+
+  for(const andGroup of orGroups){
+    let ok = true
+    let tmpCount = 0
+    let tmpStrength = 0
+
+    for(const c of andGroup){
+      const v = s[c.key]
+      const yes =
+        (c.op==='>=' && v>=c.value) || (c.op==='>' && v>c.value) ||
+        (c.op==='<='&& v<=c.value) || (c.op==='<' && v<c.value) ||
+        (c.op==='='  && v===c.value) || (c.op==='==' && v===c.value) ||
+        (c.op==='<='&& v<=c.value)
+
+      if(!yes){ ok=false; break }
+
+      tmpCount++
+      const d = (c.op==='>='||c.op==='>') ? (v - c.value)
+             : (c.op==='<' ||c.op==='<=') ? (c.value - v)
+             : 0
+      if(d>0) tmpStrength += d
+    }
+
+    if(ok){
+      matched = true
+      matchCount = Math.max(matchCount, tmpCount)
+      strength   = Math.max(strength, tmpStrength)
     }
   }
-  let best = 0
-  for(const orExpr of orParts){
-    const andParts = orExpr.split('&&').map(a=>a.trim()).filter(Boolean)
-    const scores = andParts.map(atomScore)
-    const avg = scores.length ? scores.reduce((a,b)=>a+b,0)/scores.length : 0
-    if(avg > best) best = avg
-  }
-  return best
+
+  return { matched, matchCount, strength }
+}
+
+// "dryness>=65 & brightness<=45 | redness>=60" → [[...AND...],[...AND...]]
+function parseRule(str: string): Cond[][]{
+  const orParts = str.split(/\s*\|\||\s*\|\s*/g)
+  return orParts.map(andStr=>{
+    const andParts = andStr.split(/\s*&\s*|\s*&&\s*/g).filter(Boolean)
+    return andParts.map(p=>{
+      const m = p.match(/^(dryness|oiliness|redness|brightness|puffiness)\s*(>=|<=|>|<|==|=)\s*(\d{1,3})$/i)
+      if(!m) throw new Error('invalid rule: '+p)
+      return { key: m[1] as keyof Scores, op: m[2] as Op, value: Number(m[3]) }
+    })
+  })
 }
