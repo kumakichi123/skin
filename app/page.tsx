@@ -61,6 +61,7 @@ export default function Page(){
     setError('')
     if(!file){ setError('画像を選択してください'); return }
     setLoading(true)
+    const t0 = performance.now()
     ga('analyze_start')
 
     try{
@@ -73,7 +74,7 @@ export default function Page(){
       const json = await res.json()
       if(!res.ok){ throw new Error(json?.error || '解析に失敗しました') }
       setScores(json.scores)
-      ga('analyze_success', { latency_ms: performance.now() }) // 簡易で計測
+      ga('analyze_success', { latency_ms: Math.round(performance.now() - t0) })
 
       const qs = new URLSearchParams({
         dryness: String(json.scores.dryness),
@@ -93,6 +94,23 @@ export default function Page(){
     }finally{
       setLoading(false)
     }
+  }
+
+  const onShareImage = () => {
+    if(!scores){ return }
+    const qs = new URLSearchParams({
+      dryness:String(scores.dryness),
+      oiliness:String(scores.oiliness),
+      redness:String(scores.redness),
+      brightness:String(scores.brightness),
+      puffiness:String(scores.puffiness),
+      p1: products[0]?.name || '',
+      p2: products[1]?.name || '',
+      p3: products[2]?.name || '',
+    })
+    const url = `/api/share?${qs.toString()}`
+    ga('share_image_opened')
+    window.open(url, '_blank')
   }
 
   return (
@@ -121,8 +139,13 @@ export default function Page(){
               <div className="label">顔写真（正面・明るい場所・ノーメイク推奨）</div>
               <input type="file" accept="image/*" onChange={(e)=>setFile(e.target.files?.[0]||null)} />
               <p className="small" style={{marginTop:6}}>推奨: 正面・明るい均一光・カメラから30–50cm・髪で顔を隠さない</p>
-              <div style={{marginTop:12}}>
+              <div style={{marginTop:12, display:'flex', gap:8, flexWrap:'wrap'}}>
                 <button className="button" onClick={onAnalyze} disabled={loading}>{loading?'解析中…':'解析する'}</button>
+                {scores && (
+                  <button className="button" onClick={onShareImage}>
+                    シェア用画像を作成（9:16）
+                  </button>
+                )}
               </div>
               {error && <p className="small" style={{color:'#dc2626',marginTop:8}}>{error}</p>}
             </div>
@@ -165,6 +188,10 @@ export default function Page(){
               </article>
             ))}
           </div>
+          {/* シェア説明（任意） */}
+          {scores && (
+            <p className="small" style={{opacity:.7, marginTop:10}}>シェア用画像は新規タブで開きます。スマホは長押しで保存→Instagramストーリーに投稿できます。</p>
+          )}
         </section>
 
         <footer className="small" style={{opacity:.8}}>
