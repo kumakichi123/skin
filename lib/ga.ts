@@ -1,5 +1,5 @@
 // lib/ga.ts
-export function track(event: string, params?: Record<string, any>) {
+export function ga(event: string, params?: Record<string, any>) {
   if (typeof window === 'undefined') return
   const w = window as any
   if (typeof w.gtag === 'function') {
