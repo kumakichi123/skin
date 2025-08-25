@@ -9,11 +9,24 @@ const MDX_MAP: Record<string, ComponentType<any>> = {
     () => import('../../../content/recipes/asparagus-grapefruit-salad.mdx'),
     { loading: () => <div className="p-4 text-sm opacity-70">読み込み中…</div> }
   ),
-  'simple-hydration-toner': dynamic(
-    () => import('../../../content/recipes/simple-hydration-toner.mdx'),
+  'salmon-mushroom-butter-rice': dynamic(
+    () => import('../../../content/recipes/salmon-mushroom-butter-rice.mdx'),
+    { loading: () => <div className="p-4 text-sm opacity-70">読み込み中…</div> }
+  ),
+  'winter-melon-herbal-soup': dynamic(
+    () => import('../../../content/recipes/winter-melon-herbal-soup.mdx'),
+    { loading: () => <div className="p-4 text-sm opacity-70">読み込み中…</div> }
+  ),
+  'beef-lettuce-korean-salad': dynamic(
+    () => import('../../../content/recipes/beef-lettuce-korean-salad.mdx'),
+    { loading: () => <div className="p-4 text-sm opacity-70">読み込み中…</div> }
+  ),
+  'ginger-pork-meatball-teriyaki': dynamic(
+    () => import('../../../content/recipes/ginger-pork-meatball-teriyaki.mdx'),
     { loading: () => <div className="p-4 text-sm opacity-70">読み込み中…</div> }
   ),
 }
+
 
 export default function RecipeEntryPage({ params }: { params: { id: string } }) {
   const Mdx = MDX_MAP[params.id]

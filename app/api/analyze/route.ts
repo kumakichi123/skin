@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
     })
 
     if (!r.ok) {
-      const detail = await r.text().catch(()=>'')
+      const detail = await r.text().catch(()=> '')
       console.error('OpenAI error', r.status, detail)
       return NextResponse.json({ error: 'OPENAI_ERROR', status: r.status, detail }, { status: 500 })
     }

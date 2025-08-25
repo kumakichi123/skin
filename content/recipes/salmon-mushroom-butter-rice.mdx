@@ -1,0 +1,65 @@
+import RecipeLayout from '../../components/recipes/RecipeLayout'
+import Ingredients from '../../components/recipes/mdx/Ingredients'
+import { Steps, Step } from '../../components/recipes/mdx/Steps'
+
+export const meta = {
+  title: 'バター香る鮭とシメジの炊き込みご飯',
+  servings: '2人分',
+  time: '約50分（浸水・炊飯含む）',
+  tags: ['乾燥ケア'],
+  storagePrefix: 'https://uotkswxcohvlcmuhqnmq.supabase.co/storage/v1/object/public/recipes/salmon-mushroom-butter-rice',
+  images: [
+    'image4.png?v=20250825-1',
+    'image2.png?v=20250825-1',
+    'image3.png?v=20250825-1',
+    'image1.png?v=20250825-1',
+  ],
+}
+
+<RecipeLayout meta={meta}>
+
+香り高いバターと鮭・シメジの旨みを<strong>炊飯器まかせ</strong>で凝縮。  
+仕上げに大葉を添えて後味さっぱり。
+
+<Ingredients title="材料（2人分）">
+- **米** 2合  
+- **酒** 大さじ1、**醤油** 大さじ1  
+- **シメジ** 1/2株（石づきを除き小房に）  
+- **鮭** 2切れ（骨があれば除く）  
+- **バター** 20g  
+- **大葉（シソ）** 10枚
+</Ingredients>
+
+<Steps>
+  <Step title="米を浸水させる" time="20分" note="米は研いだあと、しっかり浸水させる">
+    米を洗って<strong>20分以上</strong>浸水。ざるに上げて<strong>しっかり水気を切る</strong>。
+  </Step>
+
+  <Step title="炊飯する" img={`${meta.storagePrefix}/image3.png?v=20250825-1`} time="約30分" note="通常の白米モードでOK">
+    釜に米を入れ、<strong>水（通常の2合の線まで）</strong>・酒・醤油を加えて混ぜる。  
+    シメジを全体に広げ、上に鮭をのせて<strong>通常モードで炊飯</strong>。
+  </Step>
+
+  <Step title="仕上げ" img={`${meta.storagePrefix}/image4.png?v=20250825-1`} time="約5分" note="余熱でバターをなじませる">
+    炊き上がったら<strong>5分ほど蒸らし</strong>、バターを加える。  
+    鮭の皮と骨を除いてほぐし、全体を<strong>切るように混ぜる</strong>。千切りの大葉をのせて完成。
+  </Step>
+</Steps>
+
+## 作りやすくするコツ
+- 水加減は<strong>普段の白米の線</strong>に合わせる（調味料分はそのままでOK）。  
+- バターは<strong>後入れ</strong>で香りよく。  
+- 鮭は<strong>生鮭でも塩鮭でも可</strong>（塩鮭なら醤油をやや控えめに）。
+
+## 保存の目安
+- 粗熱をとってから小分けにし、<strong>冷蔵で当日〜翌日</strong>。  
+- 長期は<strong>冷凍推奨（1食分ずつ）</strong>。食べる時はレンジで加熱。
+
+## アレルゲン
+- 魚（鮭）、乳（バター）、大豆・小麦（醤油）。各製品表示を確認してください。
+
+## 買い物メモ
+- 鮭切り身／シメジ／バター／大葉  
+- 酒・醤油（在庫確認）
+
+</RecipeLayout>

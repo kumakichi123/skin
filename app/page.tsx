@@ -323,21 +323,53 @@ export default function Page(){
     setError(null)
     setLoading(true)
     try{
-      // 先に簡易品質評価
-      estimateQualityFromImage(file).then(setTrust).catch(()=>{})
+      // 品質評価は解析と並列に開始して最終的にawait
+      const qualityPromise = estimateQualityFromImage(file)
+        .then((q)=>{ setTrust(q); return q })
+        .catch(()=>null)
 
       const base64 = await fileToBase64(file)
+
+      // 解析
       const resA = await fetch('/api/analyze', {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ imageBase64: base64 }),
       })
       if (!resA.ok) throw new Error(`analyze failed (${resA.status})`)
       const { scores } = (await resA.json()) as { scores: Scores }
       setScores(scores)
-
       try { localStorage.setItem('lastScores', JSON.stringify(scores)) } catch {}
 
+      // レコメンド
       const recs = await fetchRecommendations(scores)
       setProducts(recs)
+
+      // 品質（必要なら待つ）
+      const quality = await qualityPromise
+
+      // ★★★ 保存：DBに記録 ★★★
+      if (user) {
+        try {
+          const resSave = await fetch('/api/measurements', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              userId: user.id,
+              scores,
+              products: recs,
+              analysis_version: 'v1',
+            }),
+          })
+          const j = await resSave.json().catch(()=>null)
+          if (resSave.ok && j?.item) {
+            // 直近リストへ即時反映（先頭に追加）
+            setWeekItems((prev)=> [j.item as Measurement, ...prev])
+          } else {
+            console.warn('save failed', j)
+          }
+        } catch (err) {
+          console.error('保存に失敗しました', err)
+        }
+      }
 
       scrollTo(statsSectionRef.current)
     }catch(e:any){

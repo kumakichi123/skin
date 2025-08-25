@@ -1,0 +1,75 @@
+import RecipeLayout from '../../components/recipes/RecipeLayout'
+import Ingredients from '../../components/recipes/mdx/Ingredients'
+import { Steps, Step } from '../../components/recipes/mdx/Steps'
+
+export const meta = {
+  title: '生姜香る豚こま団子の照り焼き',
+  servings: '2人分',
+  time: '約25分',
+  tags: ['乾燥ケア','ハリ・弾力'],
+  storagePrefix: 'https://uotkswxcohvlcmuhqnmq.supabase.co/storage/v1/object/public/recipes/ginger-pork-meatball-teriyaki',
+  images: [
+    'image1.png?v=20250825-1',
+    'image2.png?v=20250825-1',
+    'image3.png?v=20250825-1',
+    'image4.png?v=20250825-1',
+  ],
+}
+
+<RecipeLayout meta={meta}>
+
+刻んだ生姜とねぎの香りをまとった<strong>ふんわり豚こま団子</strong>を、甘辛だれで照り良く仕上げます。  
+ごはんが進む定番おかず。
+
+<Ingredients title="材料（2人分）">
+- <strong>豚こま肉</strong> 適量  
+- <strong>生姜</strong> 適量（みじん切り）  
+- <strong>ねぎ</strong> 適量（みじん切り）  
+- <strong>片栗粉</strong> 適量  
+- <strong>油</strong> 適量  
+
+<strong>下味</strong>  
+- 料理酒 大さじ1  
+- 醤油 大さじ1  
+
+<strong>たれ</strong>  
+- 料理酒 大さじ2  
+- 醤油 大さじ2  
+- みりん 大さじ2
+</Ingredients>
+
+<Steps>
+  <Step title="下味をつける" time="5分" note="生姜・ねぎを加えてよく混ぜる">
+    豚こま肉に<strong>下味（酒・醤油）</strong>、刻んだ<strong>生姜・ねぎ</strong>を加えて混ぜ、軽くもんでなじませる。
+  </Step>
+
+  <Step title="丸めて打ち粉" time="5分" note="一口大でOK">
+    肉だねを<strong>一口大</strong>に丸め、全体に<strong>片栗粉</strong>を薄くまぶす（余分は軽くはたく）。
+  </Step>
+
+  <Step title="焼く" img={`${meta.storagePrefix}/image3.png?v=20250825-1`} time="10分" note="転がしながら均一に焼き色">
+    フライパンに<strong>油</strong>を熱し、団子を入れて<strong>転がしながら</strong>焼く。全面に焼き色を付け、<strong>中まで火を通す</strong>。
+  </Step>
+
+  <Step title="たれを絡める" img={`${meta.storagePrefix}/image4.png?v=20250825-1`} time="5分" note="照りが出るまで煮詰める">
+    余分な油を<strong>拭き取り</strong>、<strong>料理酒・醤油・みりん</strong>を加えて煮からめる。<strong>照り</strong>が出たら火を止める。
+  </Step>
+</Steps>
+
+## 作りやすくするコツ
+- 団子は<strong>軽く握る</strong>とふんわり食感に。  
+- 片栗粉は<strong>薄く均一</strong>に。厚すぎると粉っぽくなります。  
+- たれは<strong>中火でとろみが付くまで</strong>。焦げやすいので混ぜながら。
+
+## 保存の目安
+- 粗熱をとってから保存容器へ。<strong>冷蔵で当日〜翌日</strong>まで。  
+- 冷凍可（1回分ずつ）／温め直しはレンジ推奨。
+
+## アレルゲン
+- 豚肉、<strong>小麦・大豆</strong>（醤油）。各製品の表示を確認してください。
+
+## 買い物メモ
+- 豚こま肉／生姜／ねぎ／片栗粉／油  
+- 料理酒／醤油／みりん
+
+</RecipeLayout>

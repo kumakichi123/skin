@@ -1,0 +1,63 @@
+import RecipeLayout from '../../components/recipes/RecipeLayout'
+import Ingredients from '../../components/recipes/mdx/Ingredients'
+import { Steps, Step } from '../../components/recipes/mdx/Steps'
+
+export const meta = {
+  title: '冬瓜と鶏肉の薬膳スープでむくみをケア',
+  servings: '2人分',
+  time: '約30分',
+  tags: ['むくみ対策', '乾燥ケア'],
+  storagePrefix: 'https://uotkswxcohvlcmuhqnmq.supabase.co/storage/v1/object/public/recipes/winter-melon-herbal-soup',
+  images: [
+    'image1.png?v=20250825-1',
+    'image2.png?v=20250825-1',
+    'image3.png?v=20250825-1',
+    'image4.png?v=20250825-1'
+  ]
+}
+
+<RecipeLayout meta={meta}>
+
+冬瓜、鶏もも肉と卵を使ったやさしい薬膳スープです。冬瓜の豊富な水分と利尿作用が余分な水分を流し、鶏肉と卵のたんぱく質が体を温めます。暑さやむくみが気になる日に手軽に作れる一品です。
+
+<Ingredients title="材料（2人分）">
+- 冬瓜 1/4個
+- 鶏もも肉 小1枚
+- 卵 3個
+- 鶏がらスープの素 大さじ1/2
+- 酒 大さじ2
+- 塩 小さじ1/2
+- こしょう 少々
+- 水 600ml（冬瓜が浸る量）
+</Ingredients>
+
+<Steps>
+  <Step title="冬瓜を下処理する" img={`${meta.storagePrefix}/image2.png?v=20250825-1`} time="約10分" note="冬瓜の皮や種を除く">
+    冬瓜を横半分に切り、縦に6等分してふわふわした種とワタを大きめに取り除く。5〜6cm角に切りそろえ、緑の部分が少し残る程度に薄く皮をむく。
+  </Step>
+  <Step title="冬瓜と鶏肉を煮る" img={`${meta.storagePrefix}/image3.png?v=20250825-1`} time="約15分">
+    鍋に冬瓜を入れ、ひたひたになるくらいの水（約600ml）を注いで下ゆでする。ひと口大に切った鶏もも肉を加えて、鶏がらスープの素と酒を入れ、中火で煮る。
+  </Step>
+  <Step title="味付けして卵を流し入れる" img={`${meta.storagePrefix}/image1.png?v=20250825-1`} time="約5分">
+    塩とこしょうで味をととのえる。溶き卵を回し入れてふんわり固め、火を止める。器に盛り付け、お好みで刻んだ青ねぎを散らして出来上がり。
+  </Step>
+</Steps>
+
+## 作りやすくするコツ
+- 冬瓜は種とワタをしっかり取り、皮を薄くむくと口当たりが良くなる。
+- 鶏肉は小さめに切ると火が通りやすく、下ゆでの手間が省ける。
+
+## 保存の目安
+- 粗熱を取って密閉容器に入れ、冷蔵庫で3〜4日保存可能。
+- 冷凍保存には向かないので、早めに食べきる。
+
+## アレルゲン
+- 卵
+- 鶏肉
+
+## 買い物メモ
+- 冬瓜1/4個
+- 鶏もも肉小1枚
+- 卵3個
+- 鶏がらスープの素・酒・塩・こしょう
+</RecipeLayout>

@@ -1,0 +1,67 @@
+import RecipeLayout from '../../components/recipes/RecipeLayout'
+import Ingredients from '../../components/recipes/mdx/Ingredients'
+import { Steps, Step } from '../../components/recipes/mdx/Steps'
+
+export const meta = {
+  title: '牛肉とレタスの韓国風サラダ',
+  servings: '1人分',
+  time: '約15分',
+  tags: ['乾燥ケア','むくみ対策'],
+  storagePrefix: 'https://uotkswxcohvlcmuhqnmq.supabase.co/storage/v1/object/public/recipes/beef-lettuce-korean-salad',
+  images: [
+    'image1.png?v=20250825-1',
+    'image2.png?v=20250825-1',
+    'image3.png?v=20250825-1',
+    'image4.png?v=20250825-1',
+  ],
+}
+
+<RecipeLayout meta={meta}>
+
+香ばしい<strong>ごま油</strong>と<strong>韓国海苔</strong>の風味、<strong>キムチ</strong>の旨辛で、さっと作れて満足感のある一皿。
+
+<Ingredients title="材料（1人分）">
+- <strong>レタス</strong> 1/2株（食べやすくちぎる）  
+- <strong>赤身の牛肉</strong> 適量（薄切りまたはこま切れ）  
+- <strong>ミニトマト</strong> 適量（洗ってヘタを取る）  
+- <strong>韓国海苔</strong> 小1パック（ちぎる）  
+- <strong>キムチ</strong> 適量  
+- <strong>ごま油</strong> 大さじ1  
+- <strong>岩塩</strong> 小さじ1/2  
+- <strong>塩・こしょう</strong> 適量（牛肉用）
+</Ingredients>
+
+<Steps>
+  <Step title="レタスを下味で和える" img={`${meta.storagePrefix}/image1.png?v=20250825-1`} time="5分" note="岩塩＋ごま油でシンプルに">
+    ちぎった<strong>レタス</strong>を洗って水気をよく切る。<strong>岩塩</strong>と<strong>ごま油</strong>でさっと和え、<strong>韓国海苔</strong>をちぎって加え、皿に盛る。
+  </Step>
+
+  <Step title="トマトを準備する" img={`${meta.storagePrefix}/image2.png?v=20250825-1`} time="1分">
+    <strong>ミニトマト</strong>は洗って水気を拭く（大きければ半分に切る）。
+  </Step>
+
+  <Step title="牛肉を焼く" img={`${meta.storagePrefix}/image3.png?v=20250825-1`} time="7分" note="強めの火で手早く">
+    フライパンを熱し、牛肉を入れて<strong>塩・こしょう</strong>で調味。色が変わるまで<strong>手早く焼く</strong>。
+    焼けたらレタスの上にのせる。
+  </Step>
+
+  <Step title="仕上げる" img={`${meta.storagePrefix}/image4.png?v=20250825-1`} time="2分">
+    <strong>キムチ</strong>と<strong>ミニトマト</strong>をトッピングして完成。お好みでごま油を少量追いがけしても良い。
+  </Step>
+</Steps>
+
+## 作りやすくするコツ
+- レタスは<strong>しっかり水切り</strong>するとドレッシングが薄まらない。  
+- 牛肉は<strong>焼きすぎない</strong>としっとり。  
+- 韓国海苔は<strong>食べる直前</strong>に和えると香りと食感が活きる。
+
+## 保存の目安
+- 生野菜サラダは<strong>作り立て推奨</strong>。保存する場合は、<strong>具・レタス・海苔</strong>を別容器に分け、<strong>冷蔵で半日程度</strong>を目安に。
+
+## アレルゲン
+- <strong>牛肉</strong>、<strong>ごま</strong>。キムチや韓国海苔の調味に<strong>小麦・大豆</strong>等を含む場合があります。各製品表示を確認してください。
+
+## 買い物メモ
+- レタス／赤身牛肉／ミニトマト／韓国海苔／キムチ／ごま油／岩塩／塩・こしょう
+
+</RecipeLayout>
