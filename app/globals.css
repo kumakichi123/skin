@@ -1,47 +1,69 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&display=swap');
+/* app/globals.css */
+@import "tailwindcss";
 
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  font-family: 'Noto Sans JP', system-ui, -apple-system, Roboto, "Helvetica Neue", Arial;
-}
-.app-body {
-  background: linear-gradient(135deg, #fdfbfb, #ebedee);
-  min-height: 100vh;
-  color: #0f172a;
+/* v4: テーマ変数（bg/text/surface…） */
+@theme{
+  --color-bg: rgb(var(--bg) / <alpha-value>);
+  --color-surface: rgb(var(--surface) / <alpha-value>);
+  --color-text: rgb(var(--text) / <alpha-value>);
+  --color-muted: rgb(var(--muted) / <alpha-value>);
+  --color-brand-primary: rgb(var(--brand-primary) / <alpha-value>);
+  --color-brand-ring: rgb(var(--brand-ring) / <alpha-value>);
 }
 
-/* 共通要素 */
-.button {
-  background: linear-gradient(135deg, #7c3aed, #9333ea);
-  color: #fff;
-  border: none;
+/* ライト基調（白×ラベンダー） */
+:root{
+  --bg: 255 255 255;
+  --surface: 245 243 255;   /* lavender */
+  --text: 17 24 39;         /* gray-900 */
+  --muted: 107 114 128;     /* gray-500 */
+  --brand-primary: 124 58 237; /* violet-600 */
+  --brand-ring: 167 139 250;   /* violet-400 */
+}
+
+html, body { height: 100%; }
+body{
+  /* 全体背景を薄ラベンダーで統一 */
+  @apply bg-surface text-text antialiased;
+}
+
+/* ===== 汎用カード / ボタン / バッジ ===== */
+.card{
+  @apply bg-white border border-gray-200 rounded-2xl;
+  box-shadow: 0 10px 30px rgba(167,139,250,.18);
+}
+.btn-primary{
+  @apply inline-flex items-center justify-center rounded-full px-5 py-2.5 bg-brand-primary text-white font-semibold hover:opacity-95 focus:outline-none focus-visible:ring-4 ring-brand-ring;
+}
+.badge{
+  @apply inline-flex items-center rounded-full bg-surface px-2.5 py-1 text-xs text-muted;
+}
+
+/* ===== ローディング・スケルトン ===== */
+.skeleton{ @apply animate-pulse rounded-lg bg-surface; }
+
+/* ===== Recipe MDX polish ===== */
+.mdx h2 { @apply mt-10 text-xl font-extrabold tracking-tight text-violet-700; }
+.mdx h3 { @apply mt-8 text-lg font-semibold text-gray-900; }
+.mdx p  { @apply leading-7 text-gray-800; }
+.mdx ul { @apply list-disc pl-6 space-y-1; }
+.mdx ol { @apply list-decimal pl-6 space-y-1; }
+.mdx hr { @apply my-8 border-t border-gray-200; }
+.mdx code { @apply rounded bg-gray-100 px-1 py-0.5 text-sm; }
+.mdx strong { @apply font-semibold; }
+/* 画像は常に中央＆角丸＆枠＆影（MDXの <img> 用の見た目） */
+.mdx img { @apply mx-auto rounded-xl ring-1 ring-gray-200 shadow-sm; }
+/* ---- Cookpad風のステップ番号バッジ ---- */
+.steps { counter-reset: step; }
+.steps > li { position: relative; counter-increment: step; padding-left: 3.25rem; }
+.steps > li::before{
+  content: counter(step);
+  position: absolute; left: 1rem; top: 1rem;
+  width: 2rem; height: 2rem; display: grid; place-items: center;
   border-radius: 9999px;
-  padding: 12px 24px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  background: rgb(var(--surface)); /* 薄ラベンダー */
+  color: rgb(var(--text));
+  box-shadow: 0 0 0 2px rgba(167,139,250,.35) inset; /* brand ring を薄く */
+  font-weight: 700;
 }
-.button:hover { opacity: 0.9; transform: translateY(-1px); }
-.button:disabled { opacity: 0.6; cursor: not-allowed; }
-
-.card {
-  background: #fff;
-  border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-  padding: 20px;
-}
-
-.container { max-width: 960px; margin: 0 auto; padding: 24px; }
-.grid { display: grid; gap: 16px; }
-.grid-2 { grid-template-columns: 1fr; }
-@media(min-width:900px){ .grid-2 { grid-template-columns: 1fr 1fr; } }
-
-.label { font-size: 14px; color: #475569; margin-bottom: 6px; }
-.small { font-size: 13px; color: #64748b; }
-.link {
-  color: #7c3aed;
-  text-decoration: none;
-  font-weight: 600;
-}
-.link:hover { text-decoration: underline; }
+.card h2:first-child { @apply mt-0; }

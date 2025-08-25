@@ -1,0 +1,80 @@
+import RecipeLayout from '../../components/recipes/RecipeLayout'
+import Ingredients from '../../components/recipes/mdx/Ingredients'
+import { Steps, Step } from '../../components/recipes/mdx/Steps'
+
+export const meta = {
+  title: 'アスパラとグレープフルーツの生ハムサラダ',
+  servings: '2人分',
+  time: '約10分（下ごしらえ含む）',
+  tags: ['くすみケア', 'ハリ・シミ対策', '肌荒れケア'],
+  storagePrefix: 'https://uotkswxcohvlcmuhqnmq.supabase.co/storage/v1/object/public/recipes/asparagus-grapefruit-salad',
+  images: [
+    'image1.png?v=20250824-2',
+    'image2.png?v=20250824-2',
+    'image3.png?v=20250824-2',
+    'image4.png?v=20250824-2'
+  ]
+}
+
+<RecipeLayout meta={meta}>
+
+柑橘の爽やかさと生ハムのうま味、クルミの香ばしさを**さっと和えるだけ**。  
+手間をかけずに主役級の一皿になります。
+
+<Ingredients title="材料（2人分）">
+- **アスパラガス** 2本  
+- **グレープフルーツ**（ルビー1／ホワイト1）  
+- **ベビーリーフ** 20g、**サニーレタス** 3枚  
+- **生ハム** 4枚、**ディル** 適量  
+- **クルミ（ロースト）** 10g  
+
+**ドレッシング**  
+- グレープフルーツ果汁 大さじ2（約30mL）  
+- はちみつ 大さじ1、塩 少々、黒こしょう 少々  
+- オリーブオイル 大さじ1  
+
+**置き換えOK**  
+- はちみつ → 砂糖 小さじ2
+</Ingredients>
+
+<Steps>
+  <Step title="準備する" img={`${meta.storagePrefix}/image4.png?v=20250824-2`}>
+    生ハムは<strong>半分に切る</strong>。クルミは<strong>粗く砕く</strong>。  
+    グレープフルーツは半分に切り、片方は<strong>果肉を取り出す</strong>／もう片方は<strong>搾って大さじ2</strong>の果汁を用意。
+  </Step>
+
+  <Step title="アスパラを下処理">
+    根元側<strong>約3cm</strong>の皮を薄くむき、<strong>ハカマ</strong>を外す。食べやすい<strong>斜め切り（約5cm）</strong>に。
+  </Step>
+
+  <Step title="さっと茹でる" img={`${meta.storagePrefix}/image2.png?v=20250824-2`} time="1分半〜2分" note="冷水に落とさない">
+    沸騰湯に塩ひとつまみ（分量外）。歯ごたえが残る程度にゆで、湯気が落ちたら水気を切る。
+  </Step>
+
+  <Step title="ドレッシングを作る">
+    果汁・はちみつ・塩・黒こしょうを混ぜ、オイルを少しずつ加えながら<strong>とろり</strong>とするまで乳化させる。
+  </Step>
+
+  <Step title="仕上げ" img={`${meta.storagePrefix}/image3.png?v=20250824-2`}>
+    皿に葉物を広げ、アスパラ・果肉・生ハム・クルミ・ディルをのせる。  
+    食べる直前にドレッシングを回しかけ、軽く和えて完成。
+  </Step>
+</Steps>
+
+## 作りやすくするコツ
+- 果汁は<strong>計量</strong>して入れると味が安定。  
+- オイルは<strong>数回に分けて</strong>加えると分離しにくい。  
+- アスパラは<strong>ゆですぎない</strong>（歯ごたえを残す）。
+
+## 保存の目安
+- 葉物とドレッシングは<strong>別容器</strong>で。冷蔵<strong>半日程度</strong>。  
+- 果物＆生ハムは水分が出やすいので<strong>作り置きは避ける</strong>。
+
+## アレルゲン
+- 木の実（クルミ）、豚肉（生ハム）、はちみつ。表示を確認してください。
+
+## 買い物メモ
+- 生ハム／アスパラガス／ベビーリーフ／サニーレタス／ディル  
+- グレープフルーツ（ルビー・ホワイト）／クルミ／はちみつ／オリーブオイル／塩・黒こしょう
+
+</RecipeLayout>
